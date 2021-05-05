@@ -13,6 +13,16 @@ mongoose
   .then(() => console.log("connection successful"))
   .catch((err) => console.log(err));
 
+//application routes
+app.use("/exam", examHandler);
+//default error handler
+function errorHandler(err, req, res, next) {
+  if (res.headersSend) {
+    return next(err);
+  }
+  res.status(500).json({ error: err });
+}
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
